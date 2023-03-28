@@ -19,10 +19,8 @@ public class PessoaRepository : IPessoaRepository
     public async void Add(PessoaRequestModel pessoaRequestModel)
     {
         using var connection = new SqlConnection(_config.GetConnectionString("SqlServer"));
-        await connection.ExecuteAsync(@"INSERT INTO PESSOA 
-                                        (NOME, SOBRENOME, NACIONALIDADE, CEP, ESTADO, CIDADE, LOGRADOURO, EMAIL, TELEFONE)
-                                       VALUES
-                                        (@Nome, @Sobrenome, @Nacionalidade, @Cep, @Estado, @Cidade, @Logradouro, @Email, @Telefone)", pessoaRequestModel);
+        await connection.ExecuteAsync(@"INSERT INTO PESSOA (NOME, SOBRENOME, NACIONALIDADE, CEP, ESTADO, CIDADE, LOGRADOURO, EMAIL, TELEFONE) 
+                                        VALUES              (@Nome, @Sobrenome, @Nacionalidade, @Cep, @Estado, @Cidade, @Logradouro, @Email, @Telefone)", pessoaRequestModel);
     }
 
     public async void Delete(int id)
@@ -50,7 +48,7 @@ public class PessoaRepository : IPessoaRepository
     public async Task<List<PessoaResponseModel>> GetByName(string name)
     {
         using var connection = new SqlConnection(_config.GetConnectionString("SqlServer"));
-        var pessoa = await connection.QueryAsync<PessoaResponseModel>("SELECT * FROM PESSOA WHERE NOME LIKE @Name", new { Name = @"%name%" });
+        var pessoa = await connection.QueryAsync<PessoaResponseModel>("SELECT * FROM PESSOA WHERE NOME LIKE @Name OR SOBRENOME LIKE @Name", new { Name = "%" + name + "%" });
 
         return pessoa.ToList();
     }
@@ -59,6 +57,7 @@ public class PessoaRepository : IPessoaRepository
     {
         using var connection = new SqlConnection(_config.GetConnectionString("SqlServer"));
         await connection.ExecuteAsync(@"UPDATE PESSOA SET NOME = @Nome, SOBRENOME = @Sobrenome, NACIONALIDADE = @Nacionalidade, 
-                                                CEP = @Cep, ESTADO = @Estado, CIDADE = @Cidade, LOGRADOURO = @Logradouro, EMAIL = @Email, TELEFONE = @Telefone", pessoaRequestModel);
+                                                CEP = @Cep, ESTADO = @Estado, CIDADE = @Cidade, LOGRADOURO = @Logradouro, EMAIL = @Email, TELEFONE = @Telefone
+                                        WHERE ID = @ID", pessoaRequestModel);
     }
 }

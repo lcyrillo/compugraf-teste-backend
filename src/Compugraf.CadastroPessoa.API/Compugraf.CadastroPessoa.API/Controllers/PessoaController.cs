@@ -19,27 +19,36 @@ public class PessoaController : Controller
     [Route("[action]")]
     public async Task<IActionResult> GetAll()
     {
-        var result = _pessoaService.GetAll();
+        var result = await _pessoaService.GetAll();
 
-        return Ok(result);
+        if (result != null)
+            return Ok(result);
+
+        return NoContent();
     }
 
     [HttpGet]
     [Route("[action]")]
     public async Task<IActionResult> GetPessoaById([FromQuery] int id)
     {
-        var result = _pessoaService.GetById(id);
+        var result = await _pessoaService.GetById(id);
 
-        return Ok(result);
+        if (result != null)
+            return Ok(result);
+
+        return NoContent();
     }
 
     [HttpGet]
     [Route("[action]")]
     public async Task<IActionResult> GetPessoaByName([FromQuery] string name)
     {
-        var result = _pessoaService.GetByName(name);
+        var result = await _pessoaService.GetByName(name);
 
-        return Ok(result);
+        if (result != null)
+            return Ok(result);
+
+        return NoContent();
     }
 
     [HttpPost]
