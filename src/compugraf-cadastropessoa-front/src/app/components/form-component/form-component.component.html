@@ -1,48 +1,239 @@
-<div class="container mx-auto">
-   <form>
-        <div class="form-group">
-            <label for="nome">Nome:</label>
-            <input type="text" placeholder="Nome" required>
-        </div>
+<div class="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
+    <div class="bg-white py-8 px-6 shadow rounded-lg sm:px-10">
+        <form class="mb-0 space-y-6">
+            <div>
+                <label for="nome" 
+                    class="block 
+                       text-sm 
+                       font-medium 
+                       text-gray-700">Nome
+                </label>
 
-        <div class="form-group">
-            <label for="Sobrenome">Sobrenome:</label>
-            <input type="text" placeholder="Sobrenome" required>
-        </div>
+                <input type="text" id="nome" name="nome" required
+                class="w-full
+                     border 
+                     border-gray-300 
+                     px-3 py-2 rounded-lg
+                     shadow-sm 
+                     focus:outline-none
+                     focus:border-indigo-500
+                     focus:ring-1">
+            </div>
 
-        <div class="form-group">
-            <label for="Nacionalidade">Nacionalidade:</label>
-            <input type="text" placeholder="Nacionalidade" required>
-        </div>
-        
-        <div class="form-group">
-            <label for="Cep">Cep:</label>
-            <input type="text" placeholder="Cep" required>
-        </div>
+            <div>
+                <label for="sobrenome" 
+                    class="block 
+                       text-sm 
+                       font-medium 
+                       text-gray-700">Sobrenome
+                </label>
 
-        <div class="form-group">
-            <label for="Estado">Estado:</label>
-            <input type="text" placeholder="Estado" required>
-        </div>
+                <input type="text" id="sobrenome" name="sobrenome" required
+                class="w-full
+                     border 
+                     border-gray-300 
+                     px-3 py-2 rounded-lg
+                     shadow-sm 
+                     focus:outline-none
+                     focus:border-indigo-500
+                     focus:ring-1">
+            </div>
 
-        <div class="form-group">
-            <label for="Cidade">Cidade:</label>
-            <input type="text" placeholder="Cidade" required>
-        </div>
+            <div>
+                <label for="nacionalidade" 
+                    class="block 
+                       text-sm 
+                       font-medium 
+                       text-gray-700">Nacionalidade
+                </label>
 
-        <div class="form-group">
-            <label for="Logradouro">Logradouro:</label>
-            <input type="text" placeholder="Logradouro" required>
-        </div>
+                <select id="nacionalidade" name="nacionalidade" required
+                    class="w-full
+                     border 
+                     border-gray-300 
+                     px-3 py-2 rounded-lg
+                     shadow-sm 
+                     focus:outline-none
+                     focus:border-indigo-500
+                     focus:ring-1">
+                     <option value="" selected>selecione uma opção</option>
+                     <option value="Selecione uma opção"></option>
+                     <option value="Selecione uma opção"></option>
+                     <option value="Selecione uma opção"></option>
+                     <option value="Selecione uma opção"></option>
+                </select>
+            </div>
 
-        <div class="form-group">
-            <label for="Email">Email:</label>
-            <input type="text" placeholder="Email" required>
-        </div>
+            <div>
+                <label for="cep" 
+                    class="block 
+                       text-sm 
+                       font-medium 
+                       text-gray-700">Cep
+                </label>
 
-        <div class="form-group">
-            <label for="Telefone">Telefone:</label>
-            <input type="text" placeholder="Telefone" required>
-        </div>
-    </form>
+                <input type="text" id="cep" name="cep" required
+                class="w-full
+                     border 
+                     border-gray-300 
+                     px-3 py-2 rounded-lg
+                     shadow-sm 
+                     focus:outline-none
+                     focus:border-indigo-500
+                     focus:ring-1">
+            </div>
+
+            <div>
+                <label for="estado" 
+                    class="block 
+                       text-sm 
+                       font-medium 
+                       text-gray-700">Estado
+                </label>
+
+                <input type="text" id="estado" name="estado" required
+                class="w-full
+                     border 
+                     border-gray-300 
+                     px-3 py-2 rounded-lg
+                     shadow-sm 
+                     focus:outline-none
+                     focus:border-indigo-500
+                     focus:ring-1">
+            </div>
+
+            <div>
+                <label for="cidade" 
+                    class="block 
+                       text-sm 
+                       font-medium 
+                       text-gray-700">Cidade
+                </label>
+
+                <input type="text" id="cidade" name="cidade" required
+                class="w-full
+                     border 
+                     border-gray-300 
+                     px-3 py-2 rounded-lg
+                     shadow-sm 
+                     focus:outline-none
+                     focus:border-indigo-500
+                     focus:ring-1">
+            </div>
+
+            <div>
+                <label for="logradouro" 
+                    class="block 
+                       text-sm 
+                       font-medium 
+                       text-gray-700">Logradouro
+                </label>
+
+                <input type="text" id="logradouro" name="logradouro" required
+                class="w-full
+                     border 
+                     border-gray-300 
+                     px-3 py-2 rounded-lg
+                     shadow-sm 
+                     focus:outline-none
+                     focus:border-indigo-500
+                     focus:ring-1">
+            </div>
+            
+            <div>
+                <label for="email" 
+                    class="block 
+                       text-sm 
+                       font-medium 
+                       text-gray-700">Email
+                </label>
+
+                <input type="email" id="email" name="email" required
+                class="w-full
+                     border 
+                     border-gray-300 
+                     px-3 py-2 rounded-lg
+                     shadow-sm 
+                     focus:outline-none
+                     focus:border-indigo-500
+                     focus:ring-1">
+            </div>
+            
+            <div>
+                <label for="telefone" 
+                    class="block 
+                       text-sm 
+                       font-medium 
+                       text-gray-700">Telefone
+                </label>
+
+                <input type="tel" id="telefone" name="telefone" required
+                class="w-full
+                     border 
+                     border-gray-300 
+                     px-3 py-2 rounded-lg
+                     shadow-sm 
+                     focus:outline-none
+                     focus:border-indigo-500
+                     focus:ring-1">
+            </div>
+            
+        </form>
+    </div>
+</div>
+
+<br>
+<br>
+<br>
+
+<div class="flex justify-center mb-8">
+    <table class="w-5/6">
+        <thead class="bg-indigo-600 border-b2 text-stone-200">
+            <tr>
+                <th class="p-3 text-sm font-semibold tracking-wide text-left">Id</th>
+                <th class="p-3 text-sm font-semibold tracking-wide text-left">Nome</th>
+                <th class="p-3 text-sm font-semibold tracking-wide text-left">Sobrenome</th>
+                <th class="p-3 text-sm font-semibold tracking-wide text-left">Nacionalidade</th>
+                <th class="p-3 text-sm font-semibold tracking-wide text-left">Cep</th>
+                <th class="p-3 text-sm font-semibold tracking-wide text-left">Estado</th>
+                <th class="p-3 text-sm font-semibold tracking-wide text-left">Cidade</th>
+                <th class="p-3 text-sm font-semibold tracking-wide text-left">Logradouro</th>
+                <th class="p-3 text-sm font-semibold tracking-wide text-left">Email</th>
+                <th class="p-3 text-sm font-semibold tracking-wide text-left">Telefone</th>
+                <th class="p-3 text-sm font-semibold tracking-wide text-left" colspan="2">Ações</th>
+            </tr>
+        </thead>
+
+        <tbody class="border-t-0 border-l-2 border-r-2 border-b-2 border-slate-800">
+            <tr
+                *ngFor="let pessoa of pessoas">
+                <td class="p-3 text-sm text-gray-700">{{ pessoa.id }}</td>
+                <td class="p-3 text-sm text-gray-700">{{ pessoa.nome }}</td>
+                <td class="p-3 text-sm text-gray-700">{{ pessoa.sobrenome }}</td>
+                <td class="p-3 text-sm text-gray-700">{{ pessoa.nacionalidade }}</td>
+                <td class="p-3 text-sm text-gray-700">{{ pessoa.cep }}</td>
+                <td class="p-3 text-sm text-gray-700">{{ pessoa.estado }}</td>
+                <td class="p-3 text-sm text-gray-700">{{ pessoa.cidade }}</td>
+                <td class="p-3 text-sm text-gray-700">{{ pessoa.logradouro }}</td>
+                <td class="p-3 text-sm text-gray-700">{{ pessoa.email }}</td>
+                <td class="p-3 text-sm text-gray-700">{{ pessoa.telefone }}</td>
+                
+                <td class="">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0" />
+                    </svg> 
+                </td>
+                    
+                <td>
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L10.582 16.07a4.5 4.5 0 01-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 011.13-1.897l8.932-8.931zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0115.75 21H5.25A2.25 2.25 0 013 18.75V8.25A2.25 2.25 0 015.25 6H10" />
+                    </svg>
+                </td>
+            </tr>
+
+            
+
+            
+        </tbody>
+    </table>
 </div>
