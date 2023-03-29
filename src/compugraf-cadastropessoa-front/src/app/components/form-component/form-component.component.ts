@@ -52,21 +52,31 @@ export class FormComponentComponent implements OnInit {
       });
   }
 
-  public saveUser(data: Pessoa) {
+  public savePessoa(data: Pessoa) {
     this.loading = true;
 
     if (!this.pessoaCpf) {
 
       this.pessoaService.save(data)
-        .subscribe((result) => {
-          console.warn(result);
+        .subscribe(() => {
           this.loading = false;
           this.getAll();
         })
     }
   }
 
-  public getByCpf(cpf: string) { debugger;
+  public deletePessoa(id: number): void {  debugger;
+    this.loading = true;
+
+    this.pessoaService.delete(id)
+      .subscribe(() => {
+        this.loading = false;
+      })
+
+      this.getAll();
+  }
+
+  public getByCpf(cpf: string) {
     this.cpfExistente = false;
     this.pessoaService.getByCpf(cpf)
       .subscribe((data: Pessoa) => {

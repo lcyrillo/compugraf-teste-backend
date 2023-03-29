@@ -28,4 +28,8 @@ export class PessoaService {
    save(user: Pessoa): Observable<Pessoa> {
     return this.http.post<Pessoa>(`${this.endpoint}AddPessoa`, user);
    }
+
+   delete(id: number): Observable<Pessoa> {
+     return this.http.delete<Pessoa>(`${this.endpoint}DeletePessoa/${id}`);
+   }
 }
