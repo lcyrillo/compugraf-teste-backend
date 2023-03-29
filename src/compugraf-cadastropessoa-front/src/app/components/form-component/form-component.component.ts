@@ -1,7 +1,8 @@
-import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { FormBuilder, FormGroup, NgForm, Validators } from '@angular/forms';
 import { Nacionalidade } from 'src/app/shared/models/nacionalidade.model';
 import { Pessoa } from 'src/app/shared/models/pessoa.model';
+import { PessoaEdit } from 'src/app/shared/models/pessoaEdit.model';
 import { PessoaService } from 'src/app/shared/services/pessoa.service';
 
 @Component({
@@ -10,13 +11,17 @@ import { PessoaService } from 'src/app/shared/services/pessoa.service';
   styleUrls: ['./form-component.component.scss']
 })
 export class FormComponentComponent implements OnInit {
+  @ViewChild('pessoaForm') pessoa : Pessoa;
+  
   // formCadastro: FormGroup;
   public pessoas: Pessoa[];
   public nacionalidade: Nacionalidade[];
   public pessoaSelecionada: Pessoa[];
+  public pessoaEditar: PessoaEdit = new PessoaEdit();
   public pessoaCpf: Pessoa;
   public cpfExistente: boolean;
   public loading: boolean;
+  public editando: boolean;
 
   constructor(
     // private fb: FormBuilder,
@@ -43,6 +48,8 @@ export class FormComponentComponent implements OnInit {
 
   public getPessoa(id: number): void {
     this.pessoaSelecionada = this.pessoas.filter(filter => filter.id === id);
+    this.pessoaEditar = this.pessoaSelecionada[0];
+    this.editando = true;
   }
 
   public getAll() {
@@ -52,20 +59,36 @@ export class FormComponentComponent implements OnInit {
       });
   }
 
-  public savePessoa(data: Pessoa) {
+  public savePessoa(data: Pessoa, form: NgForm) {
     this.loading = true;
 
-    if (!this.pessoaCpf) {
+    if (this.editando) {
+      data.id = this.pessoaEditar.id;
+      this.updatePessoa(data, form);
+    } else {
+      if (!this.pessoaCpf) {
 
-      this.pessoaService.save(data)
-        .subscribe(() => {
-          this.loading = false;
-          this.getAll();
-        })
+        this.pessoaService.save(data)
+          .subscribe(() => {
+            this.loading = false;
+            this.getAll();
+          })
+      }
     }
+
+    this.resetForm(form);  
   }
 
-  public deletePessoa(id: number): void {  debugger;
+  private updatePessoa(data: Pessoa, form: NgForm) {
+
+    this.pessoaService.update(data)
+      .subscribe(() => {
+        this.loading = false;
+        this.getAll();
+      })
+  }
+
+  public deletePessoa(id: number): void {
     this.loading = true;
 
     this.pessoaService.delete(id)
@@ -84,6 +107,11 @@ export class FormComponentComponent implements OnInit {
         if(this.pessoaCpf !== undefined && this.pessoaCpf !== null)
           this.cpfExistente = true;
       })
+  }
+
+  resetForm(form: NgForm) {
+    form.resetForm();
+    this.editando = false;
   }
 
 }

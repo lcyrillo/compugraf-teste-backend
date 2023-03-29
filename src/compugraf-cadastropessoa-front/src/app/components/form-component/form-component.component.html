@@ -1,6 +1,6 @@
 <div class="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
     <div class="bg-white py-8 px-6 shadow rounded-lg sm:px-10">
-        <form #pessoaForm="ngForm" (ngSubmit)="savePessoa(pessoaForm.value)" class="mb-0 space-y-6">
+        <form #pessoaForm="ngForm" novalidate (ngSubmit)="savePessoa(pessoaForm.value, pessoaForm)" class="mb-0 space-y-6">
             <div>
                 <label for="nome" 
                     class="block 
@@ -9,7 +9,7 @@
                        text-gray-700">Nome
                 </label>
 
-                <input ngModel
+                <input ngModel #sobrenome="ngModel" [(ngModel)]="pessoaEditar.nome"
                 type="text" id="nome" name="nome" required
                 class="w-full
                      border 
@@ -29,7 +29,7 @@
                        text-gray-700">Sobrenome
                 </label>
 
-                <input ngModel
+                <input ngModel #sobrenome="ngModel" [(ngModel)]="pessoaEditar.sobrenome"
                 type="text" id="sobrenome" name="sobrenome" required
                 class="w-full
                      border 
@@ -50,7 +50,7 @@
                 </label>
 
                 <input (blur)="getByCpf(this.pessoaForm.value.cpf)"
-                ngModel
+                ngModel #cpf="ngModel" [(ngModel)]="pessoaEditar.cpf"
                 type="text" id="cpf" name="cpf" required
                 class="w-full
                      border 
@@ -59,7 +59,8 @@
                      shadow-sm 
                      focus:outline-none
                      focus:border-indigo-500
-                     focus:ring-1">
+                     focus:ring-1"
+                maxlength="11">
             </div>
 
             <span *ngIf="cpfExistente">
@@ -77,7 +78,7 @@
                        text-gray-700">Nacionalidade
                 </label>
 
-                <input ngModel
+                <input ngModel #nacionalidade="ngModel" [(ngModel)]="pessoaEditar.nacionalidade"
                 type="text" id="nacionalidade" name="nacionalidade" required
                 class="w-full
                      border 
@@ -113,7 +114,7 @@
                        text-gray-700">Cep
                 </label>
 
-                <input ngModel
+                <input ngModel #cep="ngModel" [(ngModel)]="pessoaEditar.cep"
                 type="text" id="cep" name="cep" required
                 class="w-full
                      border 
@@ -122,7 +123,8 @@
                      shadow-sm 
                      focus:outline-none
                      focus:border-indigo-500
-                     focus:ring-1">
+                     focus:ring-1"
+                maxlength="8">
             </div>
 
             <div>
@@ -133,7 +135,7 @@
                        text-gray-700">Estado
                 </label>
 
-                <input ngModel
+                <input ngModel #estado ="ngModel" [(ngModel)]="pessoaEditar.estado"
                 type="text" id="estado" name="estado" required
                 class="w-full
                      border 
@@ -153,7 +155,7 @@
                        text-gray-700">Cidade
                 </label>
 
-                <input ngModel
+                <input ngModel #cidade="ngModel" [(ngModel)]="pessoaEditar.cidade"
                 type="text" id="cidade" name="cidade" required
                 class="w-full
                      border 
@@ -173,7 +175,7 @@
                        text-gray-700">Logradouro
                 </label>
 
-                <input ngModel
+                <input ngModel #logradouro="ngModel" [(ngModel)]="pessoaEditar.logradouro"
                 type="text" id="logradouro" name="logradouro" required
                 class="w-full
                      border 
@@ -193,7 +195,7 @@
                        text-gray-700">Email
                 </label>
 
-                <input ngModel
+                <input ngModel #email="ngModel" [(ngModel)]="pessoaEditar.email"
                 type="email" id="email" name="email" required
                 class="w-full
                      border 
@@ -213,7 +215,7 @@
                        text-gray-700">Telefone
                 </label>
 
-                <input ngModel
+                <input ngModel #telefone="ngModel" [(ngModel)]="pessoaEditar.telefone"
                 type="tel" id="telefone" name="telefone" required
                 class="w-full
                      border 
@@ -222,11 +224,13 @@
                      shadow-sm 
                      focus:outline-none
                      focus:border-indigo-500
-                     focus:ring-1">
+                     focus:ring-1"
+                maxlength="9">
             </div>
 
             <div class="flex justify-center items-center">
-                <button [disabled]="cpfExistente" class="bg-indigo-500 
+                <button *ngIf="!editando"
+                 [disabled]="cpfExistente" class="bg-indigo-500 
                             px-4 py-1 
                             rounded text-white
                             hover:bg-indigo-600"> {{ !loading ? 'Salvar' : '' }}
@@ -236,6 +240,23 @@
                     <path stroke-linecap="round" stroke-linejoin="round" d="M16.023 9.348h4.992v-.001M2.985 19.644v-4.992m0 0h4.992m-4.993 0l3.181 3.183a8.25 8.25 0 0013.803-3.7M4.031 9.865a8.25 8.25 0 0113.803-3.7l3.181 3.182m0-4.991v4.99" />
                  </svg>
                  </button>
+
+                 <button *ngIf="editando"
+                 [disabled]="cpfExistente" class="bg-indigo-500 
+                            px-4 py-1 
+                            rounded text-white
+                            hover:bg-indigo-600"> {{ !loading ? 'Alterar' : '' }}
+
+                 <svg *ngIf="loading"
+                    xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 animate-spin">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M16.023 9.348h4.992v-.001M2.985 19.644v-4.992m0 0h4.992m-4.993 0l3.181 3.183a8.25 8.25 0 0013.803-3.7M4.031 9.865a8.25 8.25 0 0113.803-3.7l3.181 3.182m0-4.991v4.99" />
+                 </svg>
+                 </button>
+
+                <span class="ml-6" (click)="resetForm(pessoaForm)">
+                    <a style="cursor:pointer">Limpar</a>
+                </span>
+                
             </div>
             
         </form>

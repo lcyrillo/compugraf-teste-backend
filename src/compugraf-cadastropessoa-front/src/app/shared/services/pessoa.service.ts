@@ -32,4 +32,8 @@ export class PessoaService {
    delete(id: number): Observable<Pessoa> {
      return this.http.delete<Pessoa>(`${this.endpoint}DeletePessoa/${id}`);
    }
+
+   update(user: Pessoa): Observable<Pessoa> {
+     return this.http.put<Pessoa>(`${this.endpoint}UpdatePessoa`, user);
+   }
 }
