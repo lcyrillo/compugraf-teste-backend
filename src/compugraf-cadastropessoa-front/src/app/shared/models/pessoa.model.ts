@@ -9,4 +9,5 @@ export interface Pessoa{
     logradouro: string;
     email: string;
     telefone: string;
+    cpf: string;
 }

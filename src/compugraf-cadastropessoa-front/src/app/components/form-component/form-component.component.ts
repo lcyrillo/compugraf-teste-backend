@@ -14,6 +14,8 @@ export class FormComponentComponent implements OnInit {
   public pessoas: Pessoa[];
   public nacionalidade: Nacionalidade[];
   public pessoaSelecionada: Pessoa[];
+  public pessoaCpf: Pessoa;
+  public cpfExistente: boolean;
   public loading: boolean;
 
   constructor(
@@ -43,21 +45,34 @@ export class FormComponentComponent implements OnInit {
     this.pessoaSelecionada = this.pessoas.filter(filter => filter.id === id);
   }
 
-  getAll() {
+  public getAll() {
     this.pessoaService.getAll()
       .subscribe((data: Pessoa[]) => {
         this.pessoas = data;
       });
   }
 
-  saveUser(data: Pessoa) {
+  public saveUser(data: Pessoa) {
     this.loading = true;
 
-    this.pessoaService.save(data)
-      .subscribe((result) => {
-        console.warn(result);
-        this.loading = false;
-        this.getAll();
+    if (!this.pessoaCpf) {
+
+      this.pessoaService.save(data)
+        .subscribe((result) => {
+          console.warn(result);
+          this.loading = false;
+          this.getAll();
+        })
+    }
+  }
+
+  public getByCpf(cpf: string) { debugger;
+    this.cpfExistente = false;
+    this.pessoaService.getByCpf(cpf)
+      .subscribe((data: Pessoa) => {
+        this.pessoaCpf = data;
+        if(this.pessoaCpf !== undefined && this.pessoaCpf !== null)
+          this.cpfExistente = true;
       })
   }
 

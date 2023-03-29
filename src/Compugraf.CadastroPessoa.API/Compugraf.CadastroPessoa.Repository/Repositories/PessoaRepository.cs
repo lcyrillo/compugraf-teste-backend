@@ -19,8 +19,8 @@ public class PessoaRepository : IPessoaRepository
     public async void Add(PessoaRequestModel pessoaRequestModel)
     {
         using var connection = new SqlConnection(_config.GetConnectionString("SqlServer"));
-        await connection.ExecuteAsync(@"INSERT INTO PESSOA (NOME, SOBRENOME, NACIONALIDADE, CEP, ESTADO, CIDADE, LOGRADOURO, EMAIL, TELEFONE) 
-                                        VALUES              (@Nome, @Sobrenome, @Nacionalidade, @Cep, @Estado, @Cidade, @Logradouro, @Email, @Telefone)", pessoaRequestModel);
+        await connection.ExecuteAsync(@"INSERT INTO PESSOA (NOME, SOBRENOME, NACIONALIDADE, CEP, ESTADO, CIDADE, LOGRADOURO, EMAIL, TELEFONE, CPF) 
+                                        VALUES              (@Nome, @Sobrenome, @Nacionalidade, @Cep, @Estado, @Cidade, @Logradouro, @Email, @Telefone, @Cpf)", pessoaRequestModel);
     }
 
     public async void Delete(int id)
@@ -35,6 +35,14 @@ public class PessoaRepository : IPessoaRepository
         var pessoa = await connection.QueryAsync<PessoaResponseModel>("SELECT * FROM PESSOA");
 
         return pessoa.ToList();
+    }
+
+    public async Task<PessoaResponseModel> GetByCpf(string cpf)
+    {
+        using var connection = new SqlConnection(_config.GetConnectionString("SqlServer"));
+        var pessoa = await connection.QueryFirstOrDefaultAsync<PessoaResponseModel>("SELECT * FROM PESSOA WHERE CPF = @Cpf", new { Cpf = cpf });
+
+        return pessoa;
     }
 
     public async Task<PessoaResponseModel> GetById(int id)

@@ -21,6 +21,10 @@ export class PessoaService {
         return this.http.get<Pessoa>(`${this.endpoint}GetPessoaById?id=${id}`);
    }
 
+   getByCpf(cpf: string): Observable<Pessoa> {
+        return this.http.get<Pessoa>(`${this.endpoint}GetPessoaByCpf?cpf=${cpf}`);
+   }
+
    save(user: Pessoa): Observable<Pessoa> {
     return this.http.post<Pessoa>(`${this.endpoint}AddPessoa`, user);
    }

@@ -11,4 +11,5 @@ public interface IPessoaService
     public void Add(PessoaRequestModel pessoaRequestModel);
     public void Update(PessoaRequestModel pessoaRequestModel);
     public Task<PessoaResponseModel> Delete(int id);
+    public Task<PessoaResponseModel> GetByCpf(string cpf);
 }

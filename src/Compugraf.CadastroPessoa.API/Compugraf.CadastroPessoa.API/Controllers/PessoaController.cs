@@ -51,6 +51,15 @@ public class PessoaController : Controller
         return NoContent();
     }
 
+    [HttpGet]
+    [Route("[action]")]
+    public async Task<IActionResult> GetPessoaByCpf([FromQuery] string cpf)
+    {
+        var result = await _pessoaService.GetByCpf(cpf);
+
+        return Ok(result);
+    }
+
     [HttpPost]
     [Route("[action]")]
     public IActionResult AddPessoa([FromBody] PessoaRequestModel pessoaRequest)

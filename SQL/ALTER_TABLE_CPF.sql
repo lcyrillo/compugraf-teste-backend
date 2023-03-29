@@ -1,0 +1,1 @@
+alter table pessoa add CPF varchar(11);

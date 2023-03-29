@@ -36,6 +36,11 @@ public class PessoaService : IPessoaService
         return _pessoaRepository.GetAll();
     }
 
+    public Task<PessoaResponseModel> GetByCpf(string cpf)
+    {
+        return _pessoaRepository.GetByCpf(cpf);             
+    }
+
     public Task<PessoaResponseModel> GetById(int id)
     {
         return _pessoaRepository.GetById(id);
