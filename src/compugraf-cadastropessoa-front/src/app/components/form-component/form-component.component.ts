@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Nacionalidade } from 'src/app/shared/models/nacionalidade.model';
 import { Pessoa } from 'src/app/shared/models/pessoa.model';
 import { PessoaService } from 'src/app/shared/services/pessoa.service';
 
@@ -11,6 +12,9 @@ import { PessoaService } from 'src/app/shared/services/pessoa.service';
 export class FormComponentComponent implements OnInit {
   // formCadastro: FormGroup;
   public pessoas: Pessoa[];
+  public nacionalidade: Nacionalidade[];
+  public pessoaSelecionada: Pessoa[];
+  public loading: boolean;
 
   constructor(
     // private fb: FormBuilder,
@@ -32,11 +36,29 @@ export class FormComponentComponent implements OnInit {
   }
 
   ngAfterViewInit(): void {
-    this.pessoaService.getAllPeople()
+    this.getAll();
+  }
+
+  public getPessoa(id: number): void {
+    this.pessoaSelecionada = this.pessoas.filter(filter => filter.id === id);
+  }
+
+  getAll() {
+    this.pessoaService.getAll()
       .subscribe((data: Pessoa[]) => {
         this.pessoas = data;
-        console.log(this.pessoas);
       });
+  }
+
+  saveUser(data: Pessoa) {
+    this.loading = true;
+
+    this.pessoaService.save(data)
+      .subscribe((result) => {
+        console.warn(result);
+        this.loading = false;
+        this.getAll();
+      })
   }
 
 }

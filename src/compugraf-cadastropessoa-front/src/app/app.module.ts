@@ -8,18 +8,20 @@ import { CadastroComponetComponent } from './components/cadastro-componet/cadast
 import { HeaderComponentComponent } from './components/header-component/header-component.component';
 import { FormComponentComponent } from './components/form-component/form-component.component';
 import { PessoaService } from './shared/services/pessoa.service';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
     AppComponent,
     CadastroComponetComponent,
     HeaderComponentComponent,
-    FormComponentComponent
+    FormComponentComponent,
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
-    HttpClientModule
+    HttpClientModule,
+    FormsModule
   ],
   providers: [
     PessoaService
