@@ -9,6 +9,7 @@ import { HeaderComponentComponent } from './components/header-component/header-c
 import { FormComponentComponent } from './components/form-component/form-component.component';
 import { PessoaService } from './shared/services/pessoa.service';
 import { FormsModule } from '@angular/forms';
+import { ExternalService } from './shared/services/external.service';
 
 @NgModule({
   declarations: [
@@ -24,7 +25,8 @@ import { FormsModule } from '@angular/forms';
     FormsModule
   ],
   providers: [
-    PessoaService
+    PessoaService,
+    ExternalService
   ],
   bootstrap: [AppComponent]
 })

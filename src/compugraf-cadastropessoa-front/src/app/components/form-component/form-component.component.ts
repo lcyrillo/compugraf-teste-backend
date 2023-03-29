@@ -1,8 +1,10 @@
+import { HttpClient } from '@angular/common/http';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, NgForm, Validators } from '@angular/forms';
 import { Nacionalidade } from 'src/app/shared/models/nacionalidade.model';
 import { Pessoa } from 'src/app/shared/models/pessoa.model';
 import { PessoaEdit } from 'src/app/shared/models/pessoaEdit.model';
+import { ExternalService } from 'src/app/shared/services/external.service';
 import { PessoaService } from 'src/app/shared/services/pessoa.service';
 
 @Component({
@@ -25,7 +27,8 @@ export class FormComponentComponent implements OnInit {
 
   constructor(
     // private fb: FormBuilder,
-    private pessoaService: PessoaService
+    private pessoaService: PessoaService,
+    private externalService: ExternalService
     ) { }
 
   ngOnInit(): void {
@@ -99,7 +102,7 @@ export class FormComponentComponent implements OnInit {
       this.getAll();
   }
 
-  public getByCpf(cpf: string) {
+  public getByCpf(cpf: string): void {
     this.cpfExistente = false;
     this.pessoaService.getByCpf(cpf)
       .subscribe((data: Pessoa) => {
@@ -109,9 +112,21 @@ export class FormComponentComponent implements OnInit {
       })
   }
 
-  resetForm(form: NgForm) {
+  resetForm(form: NgForm): void {
     form.resetForm();
     this.editando = false;
+  }
+
+  getEnderecoByCep(cep: string, form: NgForm): void {
+     this.externalService.getCep(cep)
+      .subscribe((dados) => this.fillEndereco(dados, form))
+ }
+
+  fillEndereco(dados: any, form: any) {
+    this.pessoaEditar.cep = dados.cep;
+    this.pessoaEditar.logradouro = dados.logradouro;
+    this.pessoaEditar.cidade = dados.localidade;
+    this.pessoaEditar.estado = dados.uf;
   }
 
 }

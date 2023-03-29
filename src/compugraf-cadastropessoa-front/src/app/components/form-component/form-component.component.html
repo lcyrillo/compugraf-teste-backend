@@ -114,7 +114,8 @@
                        text-gray-700">Cep
                 </label>
 
-                <input ngModel #cep="ngModel" [(ngModel)]="pessoaEditar.cep"
+                <input (blur)="getEnderecoByCep(this.pessoaForm.value.cep, this.pessoaForm)"
+                ngModel #cep="ngModel" [(ngModel)]="pessoaEditar.cep"
                 type="text" id="cep" name="cep" required
                 class="w-full
                      border 
