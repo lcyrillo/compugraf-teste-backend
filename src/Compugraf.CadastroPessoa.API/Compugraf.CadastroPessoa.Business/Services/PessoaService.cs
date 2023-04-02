@@ -20,9 +20,9 @@ public class PessoaService : IPessoaService
         _pessoaRepository.Add(pessoaRequestModel);
     }
 
-    public Task<PessoaResponseModel> Delete(int id)
+    public async Task<PessoaResponseModel> Delete(int id)
     {
-        var pessoa = _pessoaRepository.GetById(id);
+        var pessoa = await _pessoaRepository.GetById(id);
 
         if (pessoa != null)
             _pessoaRepository.Delete(id);

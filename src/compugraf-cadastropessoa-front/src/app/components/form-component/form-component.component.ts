@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, NgForm, Validators } from '@angular/forms';
+import { Observable } from 'rxjs';
 import { Nacionalidade } from 'src/app/shared/models/nacionalidade.model';
 import { Pessoa } from 'src/app/shared/models/pessoa.model';
 import { PessoaEdit } from 'src/app/shared/models/pessoaEdit.model';
@@ -62,7 +63,7 @@ export class FormComponentComponent implements OnInit {
       });
   }
 
-  public savePessoa(data: Pessoa, form: NgForm) {
+  public async savePessoa(data: Pessoa, form: NgForm) {
     this.loading = true;
 
     if (this.editando) {
@@ -82,24 +83,24 @@ export class FormComponentComponent implements OnInit {
     this.resetForm(form);  
   }
 
-  private updatePessoa(data: Pessoa, form: NgForm) {
+  private async updatePessoa(data: Pessoa, form: NgForm) {
+    this.loading = true;
 
-    this.pessoaService.update(data)
+    await this.pessoaService.update(data)
       .subscribe(() => {
         this.loading = false;
         this.getAll();
       })
   }
 
-  public deletePessoa(id: number): void {
+  public async deletePessoa(id: number) {
     this.loading = true;
 
-    this.pessoaService.delete(id)
+    await this.pessoaService.delete(id)
       .subscribe(() => {
         this.loading = false;
-      })
-
-      this.getAll();
+        this.getAll();
+      });
   }
 
   public getByCpf(cpf: string): void {
