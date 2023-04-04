@@ -8,7 +8,7 @@ import { CadastroComponetComponent } from './components/cadastro-componet/cadast
 import { HeaderComponentComponent } from './components/header-component/header-component.component';
 import { FormComponentComponent } from './components/form-component/form-component.component';
 import { PessoaService } from './shared/services/pessoa.service';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ExternalService } from './shared/services/external.service';
 
 @NgModule({
@@ -22,7 +22,8 @@ import { ExternalService } from './shared/services/external.service';
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
-    FormsModule
+    FormsModule,
+    ReactiveFormsModule
   ],
   providers: [
     PessoaService,

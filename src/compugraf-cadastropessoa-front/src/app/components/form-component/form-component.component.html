@@ -1,235 +1,292 @@
-<div class="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
-    <div class="bg-white py-8 px-6 shadow rounded-lg sm:px-10">
-        <form #pessoaForm="ngForm" novalidate (ngSubmit)="savePessoa(pessoaForm.value, pessoaForm)" class="mb-0 space-y-6">
-            <div>
-                <label for="nome" 
-                    class="block 
-                       text-sm 
-                       font-medium 
-                       text-gray-700">Nome
-                </label>
+<div class="container mx-auto mt-8 max-w-4xl">
+    <div class="bg-white py-8 px-6 shadow rounded-lg">
+        <form #pessoaForm="ngForm" novalidate (ngSubmit)="savePessoa(pessoaForm.value, pessoaForm)" class="w-full">
+            <div class="flex flex-wrap mx-3 mb-6">
 
-                <input ngModel #sobrenome="ngModel" [(ngModel)]="pessoaEditar.nome"
-                type="text" id="nome" name="nome" required
-                class="w-full
-                     border 
-                     border-gray-300 
-                     px-3 py-2 rounded-lg
-                     shadow-sm 
-                     focus:outline-none
-                     focus:border-indigo-500
-                     focus:ring-1">
+                <!---NOME-->
+                <div class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
+                    <label class="block uppercase tracking-wide 
+                                  text-gray-700 text-xs 
+                                  font-bold mb-2" for="nome"
+                        >
+                        Nome
+                      </label>
+                      <input ngModel 
+                             #nome="ngModel" 
+                             [(ngModel)]="pessoaEditar.nome"
+                             class="appearance-none block w-full 
+                                    bg-slate-100 text-gray-700 border 
+                                    rounded py-3 px-4 mb-3 
+                                    leading-tight 
+                                    focus:outline-none 
+                                    focus:bg-white" 
+                              id="nome" 
+                              name="nome"
+                              type="text" 
+                              placeholder="José"
+                              required>
+                      <p class="text-red-500 text-xs italic">Prencha o campo Nome</p>
+                </div>
+
+                <!---SOBRENOME-->
+                <div class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
+                    <label class="block uppercase tracking-wide 
+                                  text-gray-700 text-xs 
+                                  font-bold mb-2" for="sobrenome"
+                        >
+                        Sobrenome
+                      </label>
+                      <input ngModel 
+                             #sobrenome="ngModel" 
+                             [(ngModel)]="pessoaEditar.sobrenome"
+                             class="appearance-none block w-full 
+                                    bg-slate-100 text-gray-700 border 
+                                    rounded py-3 px-4 mb-3 
+                                    leading-tight 
+                                    focus:outline-none 
+                                    focus:bg-white" 
+                              id="sobrenome" 
+                              name="sobrenome"
+                              type="text" 
+                              placeholder="da Silva Santos"
+                              required>
+                      <p class="text-red-500 text-xs italic">Prencha o campo Sobrenome</p>
+                </div>
             </div>
 
-            <div>
-                <label for="sobrenome" 
-                    class="block 
-                       text-sm 
-                       font-medium 
-                       text-gray-700">Sobrenome
-                </label>
+            <div class="flex flex-wrap mx-3 mb-6">
 
-                <input ngModel #sobrenome="ngModel" [(ngModel)]="pessoaEditar.sobrenome"
-                type="text" id="sobrenome" name="sobrenome" required
-                class="w-full
-                     border 
-                     border-gray-300 
-                     px-3 py-2 rounded-lg
-                     shadow-sm 
-                     focus:outline-none
-                     focus:border-indigo-500
-                     focus:ring-1">
+                <!---CPF-->
+                <div class="w-full md:w-1/3 px-3 mb-6 md:mb-0">
+                    <label class="block uppercase tracking-wide 
+                                  text-gray-700 text-xs 
+                                  font-bold mb-2" for="cpf"
+                        >
+                        Cpf
+                      </label>
+                      <input (blur)="getByCpf(this.pessoaForm.value.cpf)"
+                             ngModel 
+                             #cpf="ngModel" 
+                             [(ngModel)]="pessoaEditar.cpf"
+                             class="appearance-none block w-full 
+                                    bg-slate-100 text-gray-700 border 
+                                    rounded py-3 px-4 mb-3 
+                                    leading-tight 
+                                    focus:outline-none 
+                                    focus:bg-white" 
+                              id="cpf" 
+                              name="cpf"
+                              type="text" 
+                              placeholder="xxx.xxx.xxx-xx"
+                              required>
+                      <p class="text-red-500 text-xs italic">Prencha o campo Cpf</p>
+                      <span *ngIf="cpfExistente">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="red" class="w-6 h-6">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3.75m9-.75a9 9 0 11-18 0 9 9 0 0118 0zm-9 3.75h.008v.008H12v-.008z" />
+                        </svg>                  
+                        <strong>CPF Já Cadastrado</strong>
+                      </span>
+                </div>
+
+  
+                <!---NACIONALIDADE-->
+                <div class="w-full md:w-1/3 px-3 mb-6 md:mb-0">
+                    <label class="block uppercase tracking-wide 
+                                  text-gray-700 text-xs 
+                                  font-bold mb-2" for="nacionalidade"
+                        >
+                        Nacionalidade
+                      </label>
+                      <select (click)="getPaises()"
+                             ngModel 
+                             #nacionalidade="ngModel" 
+                             [(ngModel)]="pessoaEditar.nacionalidade"
+                             class="appearance-none block w-full 
+                                    bg-slate-100 text-gray-700 border 
+                                    border-red-500 rounded py-3 px-4 mb-3 
+                                    leading-tight 
+                                    focus:outline-none 
+                                    focus:bg-white" 
+                              id="nacionalidade" 
+                              name="nacionalidade"
+                              >
+                              <option>Selecione</option>
+                              
+                              <option
+                                *ngFor="let pais of listaPaises"
+                              >
+                              {{ pais.nome.abreviado }}
+                              </option>
+
+                      </select>
+                      <p class="text-red-500 text-xs italic">Selecione a Nacionalidade</p>
+                </div>
+
+                <!---CEP-->
+                <div class="w-full md:w-1/3 px-3 mb-6 md:mb-0">
+                    <label class="block uppercase tracking-wide 
+                                  text-gray-700 text-xs 
+                                  font-bold mb-2" for="cep"
+                        >
+                        Cep
+                      </label>
+                      <input (blur)="getEnderecoByCep(this.pessoaForm.value.cep)"
+                            ngModel 
+                            #cep="ngModel" 
+                            [(ngModel)]="pessoaEditar.cep"
+                            class="appearance-none block w-full 
+                                    bg-slate-100 text-gray-700 border 
+                                    rounded py-3 px-4 mb-3 
+                                    leading-tight 
+                                    focus:outline-none 
+                                    focus:bg-white" 
+                            id="cep" 
+                            name="cep"
+                            type="text" 
+                            placeholder="xxxxx-xxx"
+                            required
+                            maxlength="9"
+                        >
+                       <p class="text-red-500 text-xs italic">Preencha o campo Cep</p>
+                </div>
             </div>
 
-            <div>
-                <label for="cpf" 
-                    class="block 
-                       text-sm 
-                       font-medium 
-                       text-gray-700">Cpf
-                </label>
+            <div class="flex flex-wrap mx-3 mb-6">
+                <!---LOGRADOURO-->
+                <div class="w-full md:w-1/3 px-3 mb-6 md:mb-0">
+                    <label class="block uppercase tracking-wide 
+                                  text-gray-700 text-xs 
+                                  font-bold mb-2" for="logradouro"
+                        >
+                        Logradouro
+                      </label>
+                      <input ngModel 
+                            #logradouro="ngModel" 
+                            [(ngModel)]="pessoaEditar.logradouro"
+                            class="appearance-none block w-full 
+                                    bg-slate-100 text-gray-700 border 
+                                    rounded py-3 px-4 mb-3 
+                                    leading-tight 
+                                    focus:outline-none 
+                                    focus:bg-white" 
+                            id="logradouro" 
+                            name="logradouro"
+                            type="text" 
+                            placeholder="R. XV de Novembro"
+                            required
+                        >
+                       <p class="text-red-500 text-xs italic">Preencha o campo Logradouro</p>
+                </div>
 
-                <input (blur)="getByCpf(this.pessoaForm.value.cpf)"
-                ngModel #cpf="ngModel" [(ngModel)]="pessoaEditar.cpf"
-                type="text" id="cpf" name="cpf" required
-                class="w-full
-                     border 
-                     border-gray-300 
-                     px-3 py-2 rounded-lg
-                     shadow-sm 
-                     focus:outline-none
-                     focus:border-indigo-500
-                     focus:ring-1"
-                maxlength="11">
+                <!---ESTADO-->
+                <div class="w-full md:w-1/3 px-3 mb-6 md:mb-0">
+                    <label class="block uppercase tracking-wide 
+                                  text-gray-700 text-xs 
+                                  font-bold mb-2" for="estado"
+                        >
+                        Estado
+                      </label>
+                      <input ngModel 
+                            #estado="ngModel" 
+                            [(ngModel)]="pessoaEditar.estado"
+                            class="appearance-none block w-full 
+                                    bg-slate-100 text-gray-700 border 
+                                    rounded py-3 px-4 mb-3 
+                                    leading-tight 
+                                    focus:outline-none 
+                                    focus:bg-white" 
+                            id="estado" 
+                            name="estado"
+                            type="text" 
+                            placeholder="SP"
+                            required
+                        >
+                       <p class="text-red-500 text-xs italic">Preencha o campo Estado</p>
+                </div>
+
+                <!---CIDADE-->
+                <div class="w-full md:w-1/3 px-3 mb-6 md:mb-0">
+                    <label class="block uppercase tracking-wide 
+                                  text-gray-700 text-xs 
+                                  font-bold mb-2" for="cidade"
+                        >
+                        Cidade
+                      </label>
+                      <input ngModel 
+                            #cidade="ngModel" 
+                            [(ngModel)]="pessoaEditar.cidade"
+                            class="appearance-none block w-full 
+                                    bg-slate-100 text-gray-700 border 
+                                    rounded py-3 px-4 mb-3 
+                                    leading-tight 
+                                    focus:outline-none 
+                                    focus:bg-white" 
+                            id="cidade" 
+                            name="cidade"
+                            type="text" 
+                            placeholder="São Paulo"
+                            required
+                        >
+                       <p class="text-red-500 text-xs italic">Preencha o campo Cidade</p>
+                </div>
+
             </div>
 
-            <span *ngIf="cpfExistente">
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="red" class="w-6 h-6">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3.75m9-.75a9 9 0 11-18 0 9 9 0 0118 0zm-9 3.75h.008v.008H12v-.008z" />
-                </svg>                  
-                <strong>CPF Já Cadastrado</strong>
-            </span>
+            <div class="flex flex-wrap mx-3 mb-6">
+                <!---EMAIL-->
+                <div class="w-full md:w-1/3 px-3 mb-6 md:mb-0">
+                    <label class="block uppercase tracking-wide 
+                                  text-gray-700 text-xs 
+                                  font-bold mb-2" for="email"
+                        >
+                        Email
+                      </label>
+                      <input ngModel 
+                            #email="ngModel" 
+                            [(ngModel)]="pessoaEditar.email"
+                            class="appearance-none block w-full 
+                                    bg-slate-100 text-gray-700 border 
+                                    rounded py-3 px-4 mb-3 
+                                    leading-tight 
+                                    focus:outline-none 
+                                    focus:bg-white" 
+                            id="email" 
+                            name="email"
+                            type="email" 
+                            placeholder="josesilva@email.com"
+                            required
+                        >
+                       <p class="text-red-500 text-xs italic">Preencha o campo email</p>
+                </div>
 
-            <div>
-                <label for="nacionalidade" 
-                    class="block 
-                       text-sm 
-                       font-medium 
-                       text-gray-700">Nacionalidade
-                </label>
-
-                <input ngModel #nacionalidade="ngModel" [(ngModel)]="pessoaEditar.nacionalidade"
-                type="text" id="nacionalidade" name="nacionalidade" required
-                class="w-full
-                     border 
-                     border-gray-300 
-                     px-3 py-2 rounded-lg
-                     shadow-sm 
-                     focus:outline-none
-                     focus:border-indigo-500
-                     focus:ring-1">
-
-                <!-- <select id="nacionalidade" name="nacionalidade" required
-                    class="w-full
-                     border 
-                     border-gray-300 
-                     px-3 py-2 rounded-lg
-                     shadow-sm 
-                     focus:outline-none
-                     focus:border-indigo-500
-                     focus:ring-1">
-                     <option value="" selected>selecione uma opção</option>
-                     <option value="Selecione uma opção"></option>
-                     <option value="Selecione uma opção"></option>
-                     <option value="Selecione uma opção"></option>
-                     <option value="Selecione uma opção"></option>
-                </select> -->
+                 <!---TELEFONE-->
+                 <div class="w-full md:w-1/3 px-3 mb-6 md:mb-0">
+                    <label class="block uppercase tracking-wide 
+                                  text-gray-700 text-xs 
+                                  font-bold mb-2" for="telefone"
+                        >
+                        Telefone
+                      </label>
+                      <input ngModel 
+                            #telefone="ngModel" 
+                            [(ngModel)]="pessoaEditar.telefone"
+                            class="appearance-none block w-full 
+                                    bg-slate-100 text-gray-700 border 
+                                    rounded py-3 px-4 mb-3 
+                                    leading-tight 
+                                    focus:outline-none 
+                                    focus:bg-white" 
+                            id="telefone" 
+                            name="telefone"
+                            type="tel" 
+                            placeholder="(xx) xxxxx-xxxx"
+                            required
+                        >
+                       <p class="text-red-500 text-xs italic">Preencha o campo Telefone</p>
+                </div>
             </div>
 
-            <div>
-                <label for="cep" 
-                    class="block 
-                       text-sm 
-                       font-medium 
-                       text-gray-700">Cep
-                </label>
-
-                <input (blur)="getEnderecoByCep(this.pessoaForm.value.cep, this.pessoaForm)"
-                ngModel #cep="ngModel" [(ngModel)]="pessoaEditar.cep"
-                type="text" id="cep" name="cep" required
-                class="w-full
-                     border 
-                     border-gray-300 
-                     px-3 py-2 rounded-lg
-                     shadow-sm 
-                     focus:outline-none
-                     focus:border-indigo-500
-                     focus:ring-1"
-                maxlength="8">
-            </div>
-
-            <div>
-                <label for="estado" 
-                    class="block 
-                       text-sm 
-                       font-medium 
-                       text-gray-700">Estado
-                </label>
-
-                <input ngModel #estado ="ngModel" [(ngModel)]="pessoaEditar.estado"
-                type="text" id="estado" name="estado" required
-                class="w-full
-                     border 
-                     border-gray-300 
-                     px-3 py-2 rounded-lg
-                     shadow-sm 
-                     focus:outline-none
-                     focus:border-indigo-500
-                     focus:ring-1">
-            </div>
-
-            <div>
-                <label for="cidade" 
-                    class="block 
-                       text-sm 
-                       font-medium 
-                       text-gray-700">Cidade
-                </label>
-
-                <input ngModel #cidade="ngModel" [(ngModel)]="pessoaEditar.cidade"
-                type="text" id="cidade" name="cidade" required
-                class="w-full
-                     border 
-                     border-gray-300 
-                     px-3 py-2 rounded-lg
-                     shadow-sm 
-                     focus:outline-none
-                     focus:border-indigo-500
-                     focus:ring-1">
-            </div>
-
-            <div>
-                <label for="logradouro" 
-                    class="block 
-                       text-sm 
-                       font-medium 
-                       text-gray-700">Logradouro
-                </label>
-
-                <input ngModel #logradouro="ngModel" [(ngModel)]="pessoaEditar.logradouro"
-                type="text" id="logradouro" name="logradouro" required
-                class="w-full
-                     border 
-                     border-gray-300 
-                     px-3 py-2 rounded-lg
-                     shadow-sm 
-                     focus:outline-none
-                     focus:border-indigo-500
-                     focus:ring-1">
-            </div>
-            
-            <div>
-                <label for="email" 
-                    class="block 
-                       text-sm 
-                       font-medium 
-                       text-gray-700">Email
-                </label>
-
-                <input ngModel #email="ngModel" [(ngModel)]="pessoaEditar.email"
-                type="email" id="email" name="email" required
-                class="w-full
-                     border 
-                     border-gray-300 
-                     px-3 py-2 rounded-lg
-                     shadow-sm 
-                     focus:outline-none
-                     focus:border-indigo-500
-                     focus:ring-1">
-            </div>
-            
-            <div>
-                <label for="telefone" 
-                    class="block 
-                       text-sm 
-                       font-medium 
-                       text-gray-700">Telefone
-                </label>
-
-                <input ngModel #telefone="ngModel" [(ngModel)]="pessoaEditar.telefone"
-                type="tel" id="telefone" name="telefone" required
-                class="w-full
-                     border 
-                     border-gray-300 
-                     px-3 py-2 rounded-lg
-                     shadow-sm 
-                     focus:outline-none
-                     focus:border-indigo-500
-                     focus:ring-1"
-                maxlength="9">
-            </div>
-
-            <div class="flex justify-center items-center">
+            <div class="flex justify-center items-center mt-12">
                 <button *ngIf="!editando"
                  [disabled]="cpfExistente" class="bg-indigo-500 
                             px-4 py-1 

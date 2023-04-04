@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, NgForm, Validators } from '@angular/forms';
 import { Observable } from 'rxjs';
-import { Nacionalidade } from 'src/app/shared/models/nacionalidade.model';
+import { Pais } from 'src/app/shared/models/pais.model';
 import { Pessoa } from 'src/app/shared/models/pessoa.model';
 import { PessoaEdit } from 'src/app/shared/models/pessoaEdit.model';
 import { ExternalService } from 'src/app/shared/services/external.service';
@@ -18,13 +18,14 @@ export class FormComponentComponent implements OnInit {
   
   // formCadastro: FormGroup;
   public pessoas: Pessoa[];
-  public nacionalidade: Nacionalidade[];
   public pessoaSelecionada: Pessoa[];
   public pessoaEditar: PessoaEdit = new PessoaEdit();
   public pessoaCpf: Pessoa;
   public cpfExistente: boolean;
   public loading: boolean;
   public editando: boolean;
+  public listaPaises: Pais[] = [];
+  public pais: Pais = new Pais();
 
   constructor(
     // private fb: FormBuilder,
@@ -118,16 +119,33 @@ export class FormComponentComponent implements OnInit {
     this.editando = false;
   }
 
-  getEnderecoByCep(cep: string, form: NgForm): void {
+  getEnderecoByCep(cep: string): void {
      this.externalService.getCep(cep)
-      .subscribe((dados) => this.fillEndereco(dados, form))
+      .subscribe((dados) => this.fillEndereco(dados))
  }
 
-  fillEndereco(dados: any, form: any) {
+  private fillEndereco(dados: any) {
     this.pessoaEditar.cep = dados.cep;
     this.pessoaEditar.logradouro = dados.logradouro;
     this.pessoaEditar.cidade = dados.localidade;
     this.pessoaEditar.estado = dados.uf;
+  }
+
+  getPaises(): void {
+    this.externalService.getPaises()
+     .subscribe((dados) => {
+        this.fillPaises(dados);
+     });
+  }
+
+  private fillPaises(dados: any) {
+    dados.forEach((element: any) => {
+      this.pais = new Pais();
+      this.pais.id = element.id;
+      this.pais.nome = element.nome;
+      this.listaPaises.push(this.pais);
+    });
+
   }
 
 }
