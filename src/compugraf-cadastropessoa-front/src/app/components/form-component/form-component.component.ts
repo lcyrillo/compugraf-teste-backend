@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { FormBuilder, FormGroup, NgForm, Validators } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, NgForm, Validators } from '@angular/forms';
 import { Observable } from 'rxjs';
 import { Pais } from 'src/app/shared/models/pais.model';
 import { Pessoa } from 'src/app/shared/models/pessoa.model';
@@ -15,8 +15,9 @@ import { PessoaService } from 'src/app/shared/services/pessoa.service';
 })
 export class FormComponentComponent implements OnInit {
   @ViewChild('pessoaForm') pessoa : Pessoa;
-  
-  // formCadastro: FormGroup;
+
+  pessoaForm!: FormGroup;
+
   public pessoas: Pessoa[];
   public pessoaSelecionada: Pessoa[];
   public pessoaEditar: PessoaEdit = new PessoaEdit();
@@ -34,7 +35,20 @@ export class FormComponentComponent implements OnInit {
     ) { }
 
   ngOnInit(): void {
-    // this.formCadastro = this.fb.group({
+    this.pessoaForm = new FormGroup({
+      nome: new FormControl('', Validators.required),
+      sobrenome: new FormControl('', Validators.required),
+      nacionalidade: new FormControl('', Validators.required),
+      cep: new FormControl('', Validators.required),
+      estado: new FormControl('', Validators.required),
+      cidade: new FormControl('', Validators.required),
+      logradouro: new FormControl('', Validators.required),
+      email: new FormControl('', Validators.required),
+      telefone: new FormControl('', Validators.required),
+      cpf: new FormControl('', Validators.required),
+    });
+
+    // this.pessoaForm = this.fb.group({
     //   nome: ['', [Validators.required]],
     //   sobrenome: ['', [Validators.required]],
     //   nacionalidade: ['', [Validators.required]],
@@ -47,8 +61,54 @@ export class FormComponentComponent implements OnInit {
     // })
   }
 
+  get nome() {
+    return this.pessoaForm.get('nome')!;
+  }
+
+  get sobrenome() {
+    return this.pessoaForm.get('sobrenome')!;
+  }
+
+  get nacionalidade() {
+    return this.pessoaForm.get('nacionalidade')!;
+  }
+
+  get cep() {
+    return this.pessoaForm.get('cep')!;
+  }
+
+  get estado() {
+    return this.pessoaForm.get('estado')!;
+  }
+
+  get cidade() {
+    return this.pessoaForm.get('cidade')!;
+  }
+
+  get logradouro() {
+    return this.pessoaForm.get('logradouro')!;
+  }
+
+  get email() {
+    return this.pessoaForm.get('email')!;
+  }
+
+  get telefone() {
+    return this.pessoaForm.get('telefone')!;
+  }
+
+  get cpf() {
+    return this.pessoaForm.get('cpf')!;
+  }
+
   ngAfterViewInit(): void {
     this.getAll();
+  }
+
+  save() {
+    if (this.pessoaForm.invalid) {
+      return;
+    }
   }
 
   public getPessoa(id: number): void {
@@ -81,7 +141,7 @@ export class FormComponentComponent implements OnInit {
       }
     }
 
-    this.resetForm(form);  
+    this.resetForm(form);
   }
 
   private async updatePessoa(data: Pessoa, form: NgForm) {
@@ -109,8 +169,10 @@ export class FormComponentComponent implements OnInit {
     this.pessoaService.getByCpf(cpf)
       .subscribe((data: Pessoa) => {
         this.pessoaCpf = data;
-        if(this.pessoaCpf !== undefined && this.pessoaCpf !== null)
+        if(this.pessoaCpf !== undefined && this.pessoaCpf !== null) {
           this.cpfExistente = true;
+          this.pessoaForm.invalid;
+        }
       })
   }
 

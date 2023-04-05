@@ -1,6 +1,6 @@
 <div class="container mx-auto mt-8 max-w-4xl">
     <div class="bg-white py-8 px-6 shadow rounded-lg">
-        <form #pessoaForm="ngForm" novalidate (ngSubmit)="savePessoa(pessoaForm.value, pessoaForm)" class="w-full">
+        <form (ngSubmit)="save()" [formGroup]="pessoaForm" #formDir="ngForm" class="w-full">
             <div class="flex flex-wrap mx-3 mb-6">
 
                 <!---NOME-->
@@ -11,10 +11,9 @@
                         >
                         Nome
                       </label>
-                      <input ngModel 
-                             #nome="ngModel" 
-                             [(ngModel)]="pessoaEditar.nome"
-                             class="appearance-none block w-full 
+                      <input formControlName="nome"
+                             class="form-group
+                                    appearance-none block w-full 
                                     bg-slate-100 text-gray-700 border 
                                     rounded py-3 px-4 mb-3 
                                     leading-tight 
@@ -25,7 +24,9 @@
                               type="text" 
                               placeholder="José"
                               required>
-                      <p class="text-red-500 text-xs italic">Prencha o campo Nome</p>
+                        <div *ngIf="nome.invalid && formDir.submitted" class="validation-error">
+                            <p *ngIf="nome.errors?.['required']" class="text-red-500 text-xs italic">Prencha o campo Nome</p>
+                        </div>
                 </div>
 
                 <!---SOBRENOME-->
@@ -36,9 +37,7 @@
                         >
                         Sobrenome
                       </label>
-                      <input ngModel 
-                             #sobrenome="ngModel" 
-                             [(ngModel)]="pessoaEditar.sobrenome"
+                      <input formControlName="sobrenome"
                              class="appearance-none block w-full 
                                     bg-slate-100 text-gray-700 border 
                                     rounded py-3 px-4 mb-3 
@@ -50,7 +49,9 @@
                               type="text" 
                               placeholder="da Silva Santos"
                               required>
-                      <p class="text-red-500 text-xs italic">Prencha o campo Sobrenome</p>
+                        <div *ngIf="sobrenome.invalid && formDir.submitted" class="validation-error">
+                            <p *ngIf="sobrenome.errors?.['required']" class="text-red-500 text-xs italic">Prencha o campo Sobrenome</p>
+                        </div>
                 </div>
             </div>
 
@@ -65,9 +66,7 @@
                         Cpf
                       </label>
                       <input (blur)="getByCpf(this.pessoaForm.value.cpf)"
-                             ngModel 
-                             #cpf="ngModel" 
-                             [(ngModel)]="pessoaEditar.cpf"
+                             formControlName="cpf"
                              class="appearance-none block w-full 
                                     bg-slate-100 text-gray-700 border 
                                     rounded py-3 px-4 mb-3 
@@ -79,7 +78,9 @@
                               type="text" 
                               placeholder="xxx.xxx.xxx-xx"
                               required>
-                      <p class="text-red-500 text-xs italic">Prencha o campo Cpf</p>
+                            <div *ngIf="cpf.invalid && formDir.submitted" class="validation-error">
+                                <p *ngIf="cpf.errors?.['required']" class="text-red-500 text-xs italic">Prencha o campo Cpf</p>
+                            </div>
                       <span *ngIf="cpfExistente">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="red" class="w-6 h-6">
                             <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3.75m9-.75a9 9 0 11-18 0 9 9 0 0118 0zm-9 3.75h.008v.008H12v-.008z" />
@@ -311,7 +312,7 @@
                  </svg>
                  </button>
 
-                <span class="ml-6" (click)="resetForm(pessoaForm)">
+                <span class="ml-6" >
                     <a style="cursor:pointer">Limpar</a>
                 </span>
                 
