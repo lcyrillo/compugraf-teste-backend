@@ -107,5 +107,7 @@
       }
     }
   },
-  "defaultProject": "compugraf-cadastropessoa-front"
+  "cli": {
+    "analytics": "1aef3300-deb5-456b-8868-36941f650ada"
+  }
 }

@@ -12,7 +12,7 @@ export class ExternalService {
     return this.http.get(`//viacep.com.br/ws/${cep}/json`);
    }
 
-   getPaises() { debugger;
+   getPaises() {
     return this.http.get(`//servicodados.ibge.gov.br/api/v1/paises/`);
    }
 }

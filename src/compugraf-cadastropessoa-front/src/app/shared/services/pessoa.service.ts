@@ -25,7 +25,7 @@ export class PessoaService {
         return this.http.get<Pessoa>(`${this.endpoint}GetPessoaByCpf?cpf=${cpf}`);
    }
 
-   save(user: Pessoa): Observable<Pessoa> {
+   save(user: Pessoa): Observable<Pessoa> { debugger;
     return this.http.post<Pessoa>(`${this.endpoint}AddPessoa`, user);
    }
 
@@ -33,7 +33,7 @@ export class PessoaService {
      return this.http.delete(`${this.endpoint}DeletePessoa/${id}`);
    }
 
-   update(user: Pessoa): Observable<Pessoa> {
+   update(user: Pessoa): Observable<Pessoa> { debugger;
      return this.http.put<Pessoa>(`${this.endpoint}UpdatePessoa`, user);
    }
 }

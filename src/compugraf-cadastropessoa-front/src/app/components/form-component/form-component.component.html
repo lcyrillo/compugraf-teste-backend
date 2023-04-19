@@ -12,6 +12,8 @@
                         Nome
                       </label>
                       <input formControlName="nome"
+                             ngModel 
+                             [(ngModel)]="pessoaEditar.nome"
                              class="form-group
                                     appearance-none block w-full 
                                     bg-slate-100 text-gray-700 border 
@@ -38,6 +40,8 @@
                         Sobrenome
                       </label>
                       <input formControlName="sobrenome"
+                             ngModel 
+                             [(ngModel)]="pessoaEditar.sobrenome"
                              class="appearance-none block w-full 
                                     bg-slate-100 text-gray-700 border 
                                     rounded py-3 px-4 mb-3 
@@ -67,6 +71,8 @@
                       </label>
                       <input (blur)="getByCpf(this.pessoaForm.value.cpf)"
                              formControlName="cpf"
+                             ngModel 
+                             [(ngModel)]="pessoaEditar.cpf"
                              class="appearance-none block w-full 
                                     bg-slate-100 text-gray-700 border 
                                     rounded py-3 px-4 mb-3 
@@ -99,12 +105,12 @@
                         Nacionalidade
                       </label>
                       <select (click)="getPaises()"
+                             formControlName="nacionalidade"
                              ngModel 
-                             #nacionalidade="ngModel" 
                              [(ngModel)]="pessoaEditar.nacionalidade"
                              class="appearance-none block w-full 
                                     bg-slate-100 text-gray-700 border 
-                                    border-red-500 rounded py-3 px-4 mb-3 
+                                    rounded py-3 px-4 mb-3 
                                     leading-tight 
                                     focus:outline-none 
                                     focus:bg-white" 
@@ -120,7 +126,9 @@
                               </option>
 
                       </select>
-                      <p class="text-red-500 text-xs italic">Selecione a Nacionalidade</p>
+                      <div *ngIf="nacionalidade.invalid && formDir.submitted" class="validation-error">
+                        <p *ngIf="nacionalidade.errors?.['required']" class="text-red-500 text-xs italic">Selecione a Nacionalidade</p>
+                      </div>
                 </div>
 
                 <!---CEP-->
@@ -132,8 +140,8 @@
                         Cep
                       </label>
                       <input (blur)="getEnderecoByCep(this.pessoaForm.value.cep)"
+                            formControlName="cep"
                             ngModel 
-                            #cep="ngModel" 
                             [(ngModel)]="pessoaEditar.cep"
                             class="appearance-none block w-full 
                                     bg-slate-100 text-gray-700 border 
@@ -148,7 +156,9 @@
                             required
                             maxlength="9"
                         >
-                       <p class="text-red-500 text-xs italic">Preencha o campo Cep</p>
+                        <div *ngIf="cep.invalid && formDir.submitted" class="validation-error">
+                            <p *ngIf="cep.errors?.['required']" class="text-red-500 text-xs italic">Preencha o campo Cep</p>
+                        </div>
                 </div>
             </div>
 
@@ -161,8 +171,8 @@
                         >
                         Logradouro
                       </label>
-                      <input ngModel 
-                            #logradouro="ngModel" 
+                      <input formControlName="logradouro"
+                            ngModel 
                             [(ngModel)]="pessoaEditar.logradouro"
                             class="appearance-none block w-full 
                                     bg-slate-100 text-gray-700 border 
@@ -176,7 +186,9 @@
                             placeholder="R. XV de Novembro"
                             required
                         >
-                       <p class="text-red-500 text-xs italic">Preencha o campo Logradouro</p>
+                        <div *ngIf="logradouro.invalid && formDir.submitted" class="validation-error">
+                            <p *ngIf="logradouro.errors?.['required']" class="text-red-500 text-xs italic">Preencha o campo Logradouro</p>
+                        </div>
                 </div>
 
                 <!---ESTADO-->
@@ -187,8 +199,8 @@
                         >
                         Estado
                       </label>
-                      <input ngModel 
-                            #estado="ngModel" 
+                      <input formControlName="estado"
+                            ngModel 
                             [(ngModel)]="pessoaEditar.estado"
                             class="appearance-none block w-full 
                                     bg-slate-100 text-gray-700 border 
@@ -202,7 +214,9 @@
                             placeholder="SP"
                             required
                         >
-                       <p class="text-red-500 text-xs italic">Preencha o campo Estado</p>
+                        <div *ngIf="estado.invalid && formDir.submitted" class="validation-error">
+                            <p *ngIf="estado.errors?.['required']" class="text-red-500 text-xs italic">Preencha o campo Estado</p>
+                        </div>
                 </div>
 
                 <!---CIDADE-->
@@ -213,8 +227,8 @@
                         >
                         Cidade
                       </label>
-                      <input ngModel 
-                            #cidade="ngModel" 
+                      <input formControlName="cidade"
+                            ngModel 
                             [(ngModel)]="pessoaEditar.cidade"
                             class="appearance-none block w-full 
                                     bg-slate-100 text-gray-700 border 
@@ -228,7 +242,9 @@
                             placeholder="São Paulo"
                             required
                         >
-                       <p class="text-red-500 text-xs italic">Preencha o campo Cidade</p>
+                        <div *ngIf="cidade.invalid && formDir.submitted" class="validation-error">
+                            <p *ngIf="cidade.errors?.['required']" class="text-red-500 text-xs italic">Preencha o campo Cidade</p>
+                        </div>
                 </div>
 
             </div>
@@ -242,8 +258,8 @@
                         >
                         Email
                       </label>
-                      <input ngModel 
-                            #email="ngModel" 
+                      <input formControlName="email"
+                            ngModel 
                             [(ngModel)]="pessoaEditar.email"
                             class="appearance-none block w-full 
                                     bg-slate-100 text-gray-700 border 
@@ -257,7 +273,9 @@
                             placeholder="josesilva@email.com"
                             required
                         >
-                       <p class="text-red-500 text-xs italic">Preencha o campo email</p>
+                        <div *ngIf="email.invalid && formDir.submitted" class="validation-error">
+                            <p *ngIf="email.errors?.['required']" class="text-red-500 text-xs italic">Preencha o campo E-mail</p>
+                        </div>
                 </div>
 
                  <!---TELEFONE-->
@@ -268,8 +286,8 @@
                         >
                         Telefone
                       </label>
-                      <input ngModel 
-                            #telefone="ngModel" 
+                      <input formControlName="telefone"
+                            ngModel 
                             [(ngModel)]="pessoaEditar.telefone"
                             class="appearance-none block w-full 
                                     bg-slate-100 text-gray-700 border 
@@ -283,7 +301,9 @@
                             placeholder="(xx) xxxxx-xxxx"
                             required
                         >
-                       <p class="text-red-500 text-xs italic">Preencha o campo Telefone</p>
+                        <div *ngIf="telefone.invalid && formDir.submitted" class="validation-error">
+                            <p *ngIf="telefone.errors?.['required']" class="text-red-500 text-xs italic">Preencha o campo Telefone</p>
+                        </div>
                 </div>
             </div>
 
@@ -312,7 +332,7 @@
                  </svg>
                  </button>
 
-                <span class="ml-6" >
+                <span class="ml-6">
                     <a style="cursor:pointer">Limpar</a>
                 </span>
                 

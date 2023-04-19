@@ -1,7 +1,5 @@
-import { HttpClient } from '@angular/common/http';
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, NgForm, Validators } from '@angular/forms';
-import { Observable } from 'rxjs';
+import { UntypedFormControl, UntypedFormGroup, NgForm, Validators } from '@angular/forms';
 import { Pais } from 'src/app/shared/models/pais.model';
 import { Pessoa } from 'src/app/shared/models/pessoa.model';
 import { PessoaEdit } from 'src/app/shared/models/pessoaEdit.model';
@@ -16,7 +14,7 @@ import { PessoaService } from 'src/app/shared/services/pessoa.service';
 export class FormComponentComponent implements OnInit {
   @ViewChild('pessoaForm') pessoa : Pessoa;
 
-  pessoaForm!: FormGroup;
+  pessoaForm!: UntypedFormGroup;
 
   public pessoas: Pessoa[];
   public pessoaSelecionada: Pessoa[];
@@ -24,41 +22,29 @@ export class FormComponentComponent implements OnInit {
   public pessoaCpf: Pessoa;
   public cpfExistente: boolean;
   public loading: boolean;
-  public editando: boolean;
+  public editando = false;
   public listaPaises: Pais[] = [];
   public pais: Pais = new Pais();
 
   constructor(
-    // private fb: FormBuilder,
     private pessoaService: PessoaService,
     private externalService: ExternalService
     ) { }
 
   ngOnInit(): void {
-    this.pessoaForm = new FormGroup({
-      nome: new FormControl('', Validators.required),
-      sobrenome: new FormControl('', Validators.required),
-      nacionalidade: new FormControl('', Validators.required),
-      cep: new FormControl('', Validators.required),
-      estado: new FormControl('', Validators.required),
-      cidade: new FormControl('', Validators.required),
-      logradouro: new FormControl('', Validators.required),
-      email: new FormControl('', Validators.required),
-      telefone: new FormControl('', Validators.required),
-      cpf: new FormControl('', Validators.required),
+    this.pessoaForm = new UntypedFormGroup({
+      nome: new UntypedFormControl('', Validators.required),
+      sobrenome: new UntypedFormControl('', Validators.required),
+      nacionalidade: new UntypedFormControl('', Validators.required),
+      cep: new UntypedFormControl('', Validators.required),
+      estado: new UntypedFormControl('', Validators.required),
+      cidade: new UntypedFormControl('', Validators.required),
+      logradouro: new UntypedFormControl('', Validators.required),
+      email: new UntypedFormControl('', Validators.required),
+      telefone: new UntypedFormControl('', Validators.required),
+      cpf: new UntypedFormControl('', Validators.required),
     });
 
-    // this.pessoaForm = this.fb.group({
-    //   nome: ['', [Validators.required]],
-    //   sobrenome: ['', [Validators.required]],
-    //   nacionalidade: ['', [Validators.required]],
-    //   cep: ['', [Validators.required]],
-    //   estado: ['', [Validators.required]],
-    //   cidade: ['', [Validators.required]],
-    //   logradouro: ['', [Validators.required]],
-    //   email: ['', [Validators.required]],
-    //   telefone: ['', [Validators.required]],
-    // })
   }
 
   get nome() {
@@ -106,7 +92,9 @@ export class FormComponentComponent implements OnInit {
   }
 
   save() {
-    if (this.pessoaForm.invalid) {
+    if (!this.pessoaForm.invalid) {
+      this.savePessoa(this.pessoaForm.value);
+    } else {
       return;
     }
   }
@@ -124,15 +112,14 @@ export class FormComponentComponent implements OnInit {
       });
   }
 
-  public async savePessoa(data: Pessoa, form: NgForm) {
+  public async savePessoa(data: Pessoa) { debugger;
     this.loading = true;
 
     if (this.editando) {
       data.id = this.pessoaEditar.id;
-      this.updatePessoa(data, form);
+      this.updatePessoa(data);
     } else {
       if (!this.pessoaCpf) {
-
         this.pessoaService.save(data)
           .subscribe(() => {
             this.loading = false;
@@ -141,10 +128,10 @@ export class FormComponentComponent implements OnInit {
       }
     }
 
-    this.resetForm(form);
+    this.resetForm();
   }
 
-  private async updatePessoa(data: Pessoa, form: NgForm) {
+  private async updatePessoa(data: Pessoa) {
     this.loading = true;
 
     await this.pessoaService.update(data)
@@ -176,15 +163,15 @@ export class FormComponentComponent implements OnInit {
       })
   }
 
-  resetForm(form: NgForm): void {
-    form.resetForm();
+  resetForm(): void {
+    this.pessoaForm.reset();
     this.editando = false;
   }
 
   getEnderecoByCep(cep: string): void {
      this.externalService.getCep(cep)
       .subscribe((dados) => this.fillEndereco(dados))
- }
+  }
 
   private fillEndereco(dados: any) {
     this.pessoaEditar.cep = dados.cep;
